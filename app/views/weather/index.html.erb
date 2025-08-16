@@ -2,9 +2,9 @@
 <%= image_tag 'Weather_iOS_15.webp', style: "width: 40px; height: 40;"   %> 
     <%# <link rel="icon" href="/Weather_iOS_15.webp" type="image"> %>
 
-<% content_for :title, "Weathers" %>
+<% content_for :title, "Weather Forecast" %>
 
-<h1>Weathers Application</h1>
+<h1>Weather Forecast Application</h1>
 <%= form_with url: weather_path, method: :post, local: true do %>
   <%= label_tag :address, "Enter Your address or ZIP:" %>
   <%= text_field_tag :address %>

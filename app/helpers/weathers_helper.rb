@@ -1,2 +1,2 @@
-module WeathersHelper
+module WeatherHelper
 end
