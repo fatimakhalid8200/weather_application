@@ -9,7 +9,7 @@ class WeatherController < ApplicationController
       service = WeatherService.new(params[:address])
       @forecast = service.fetch_weather
 
-      if @forecast
+      if @forecast && @forecast[:temperature].present?
         # Return weather data for display
         respond_to do |format|
           format.js { render :show_weather }
