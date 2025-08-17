@@ -1,0 +1,100 @@
+// Update the weather display with fetched data
+document.getElementById('weather-results').innerHTML = `
+  <div class="weather-data">
+    <!-- Location info -->
+    <div class="weather-location">
+      <h2><%= @forecast[:name] || "ZIP #{@forecast[:zip]}" %></h2>
+      <div class="location-details">
+        <div class="location-detail">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="white" stroke="#B0B0B0" stroke-width="1"/>
+              <circle cx="12" cy="9" r="2" fill="white" stroke="#B0B0B0" stroke-width="1"/>
+            </svg>
+            <%= @forecast[:zip] %> |
+          </span>
+        </div>
+        <div class="location-detail">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="white" stroke="#B0B0B0" stroke-width="1"/>
+              <line x1="3" y1="10" x2="21" y2="10" stroke="#B0B0B0" stroke-width="1"/>
+              <line x1="8" y1="2" x2="8" y2="6" stroke="#B0B0B0" stroke-width="1"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke="#B0B0B0" stroke-width="1"/>
+              <circle cx="12" cy="16" r="2" fill="white" stroke="#B0B0B0" stroke-width="1"/>
+              <line x1="12" y1="16" x2="12" y2="14" stroke="#B0B0B0" stroke-width="1"/>
+              <line x1="12" y1="16" x2="13.2" y2="16" stroke="#B0B0B0" stroke-width="1"/>
+            </svg>
+            <%= Date.today.strftime("%a") %> <%= Time.current.strftime("%B %d, %Y") %>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main weather display -->
+    <div class="weather-main">
+      <div class="temperature-display">
+        <!-- Current temperature -->
+        <div class="temperature">
+          <%= @forecast[:temperature] %>°F
+        </div>
+
+        <div class="weather-icon">
+          <% case @forecast[:description]&.downcase %>
+          <% when /clear/ %>
+            ☀️
+          <% when /cloud/ %>
+            ☁️
+          <% when /rain/ %>
+            🌧️
+          <% when /snow/ %>
+            ❄️
+          <% when /storm/ %>
+            ⚡
+          <% when /fog/ %>
+            🌫️
+          <% else %>
+            🌤️
+          <% end %>
+        </div>
+      </div>
+      <p class="weather-condition"><%= @forecast[:description] %></p>
+    </div>
+    
+    <!-- Weather details grid -->
+    <div class="weather-details">
+      <div class="weather-detail">
+        <div class="detail-label">High</div>
+        <div class="detail-value"><%= @forecast[:high] %>°F</div>
+      </div>
+      <div class="weather-detail">
+        <div class="detail-label">Low</div>
+        <div class="detail-value"><%= @forecast[:low] %>°F</div>
+      </div>
+      <% if @forecast[:feels_like] %>
+        <div class="weather-detail">
+          <div class="detail-label">Feels Like</div>
+          <div class="detail-value"><%= @forecast[:feels_like] %>°F</div>
+        </div>
+      <% end %>
+      <% if @forecast[:wind_speed] %>
+        <div class="weather-detail">
+          <div class="detail-label">Wind Speed</div>
+          <div class="detail-value"><%= @forecast[:wind_speed] %> mph</div>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Show if data came from cache or fresh -->
+    <div class="cache-status <%= @forecast[:cached] ? 'cached' : 'fresh' %>">
+      <% if @forecast[:cached] %>
+        Data loaded from cache
+      <% else %>
+        Fresh data fetched
+      <% end %>
+    </div>
+  </div>
+`;
+
+// Show the weather results
+document.getElementById('weather-results').style.display = 'block'; 

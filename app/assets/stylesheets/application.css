@@ -1,10 +1,428 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
  *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
- * Consider organizing styles into separate files for maintainability.
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
  */
+
+/* Weather Forecast Application Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #87CEEB 0%, #98D8E8 100%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.weather-app {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  height: 100%;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 5px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Search Section */
+.search-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 450px;
+}
+
+.search-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-input-group {
+  flex: 1;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 14px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.search-input::placeholder {
+  color: #8899a6;
+}
+
+.search-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+.search-btn:active {
+  transform: translateY(0);
+}
+
+/* Weather Results */
+.weather-results {
+  background: #E8F7FF;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 550px;
+  display: none;
+}
+
+.weather-data {
+  text-align: center;
+}
+
+.weather-location {
+  margin-bottom: 20px;
+}
+
+.weather-location h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.location-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: #7f8c8d;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.location-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.location-detail svg {
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.location-detail span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.weather-main {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #667EDC 0%, #764B66 100%);
+  border-radius: 15px;
+  color: white;
+}
+
+.temperature-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.temperature {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  color: #ffd700;
+}
+
+.weather-condition {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.weather-detail {
+  text-align: center;
+  padding: 12px;
+  background: #313F9C;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.cache-status {
+  margin-top: 15px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.cache-status.fresh {
+  background: rgba(46, 204, 113, 0.1);
+  color: #27ae60;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.cache-status.cached {
+  background: rgba(52, 152, 219, 0.1);
+  color: #2980b9;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+/* Loading and Error States */
+.loading {
+  text-align: center;
+  margin: 20px 0;
+  color: #ffffff;
+  font-size: 1rem;
+  display: none;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  color: #c0392b;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 15px 0;
+  backdrop-filter: blur(5px);
+  font-size: 0.9rem;
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .app-title {
+    font-size: 1.6rem;
+  }
+  
+  .search-section {
+    padding: 15px;
+  }
+  
+  .search-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .weather-results {
+    padding: 20px;
+  }
+  
+  .temperature {
+    font-size: 2rem;
+  }
+  
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+  
+  .weather-details {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .location-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.4rem;
+  }
+  
+  .weather-results {
+    padding: 15px;
+  }
+  
+  .temperature-display {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .weather-details {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .temperature {
+    font-size: 1.8rem;
+  }
+  
+  .weather-icon {
+    font-size: 2rem;
+  }
+  
+  .location-details {
+    gap: 6px;
+  }
+}
+
+/* Ensure single page layout */
+@media (max-height: 600px) {
+  .app-header {
+    margin-bottom: 10px;
+  }
+  
+  .app-title {
+    font-size: 1.4rem;
+  }
+  
+  .app-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .search-section {
+    padding: 15px;
+  }
+  
+  .weather-results {
+    padding: 15px;
+  }
+  
+  .weather-main {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .temperature {
+    font-size: 2rem;
+  }
+  
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+  
+  .weather-details {
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .weather-detail {
+    padding: 8px;
+  }
+}

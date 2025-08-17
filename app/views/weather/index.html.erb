@@ -1,12 +1,125 @@
 <p style="color: green"><%= notice %></p>
-<%= image_tag 'Weather_iOS_15.webp', style: "width: 40px; height: 40;"   %> 
-    <%# <link rel="icon" href="/Weather_iOS_15.webp" type="image"> %>
+<!-- Main Image -->
+<%= image_tag 'Weather_iOS_15.webp', style: "width: 40px; height: 40;"   %>
 
 <% content_for :title, "Weather Forecast" %>
 
-<h1>Weather Forecast Application</h1>
-<%= form_with url: weather_path, method: :post, local: true do %>
-  <%= label_tag :address, "Enter Your address or ZIP:" %>
-  <%= text_field_tag :address %>
-  <%= submit_tag "Get Forecast" %>
-<% end %>
+<!-- Main weather app interface -->
+<div class="container">
+  <div class="weather-app">
+    <!-- App header -->
+    <div class="app-header">
+      <h1 class="app-title">Weather Forecast</h1>
+      <p class="app-subtitle">Get real-time weather information for any location</p>
+    </div>
+
+    <!-- Search form -->
+    <div class="search-section">
+      <%= form_with url: root_path, method: :get, local: true, id: 'weather-form', class: 'search-form' do %>
+        <div class="search-input-group">
+          <%= text_field_tag :address, nil, placeholder: "Enter ZIP code or city name...", id: 'address-input', class: 'search-input' %>
+        </div>
+        <%= submit_tag "Search", id: 'submit-btn', class: 'search-btn' %>
+      <% end %>
+    </div>
+
+    <!-- Weather results area -->
+    <div id="weather-results" class="weather-results">
+      <!-- Weather data will be loaded here -->
+    </div>
+
+    <!-- Loading spinner -->
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading weather data...</p>
+    </div>
+
+    <!-- Error messages -->
+    <div id="error-message" class="error-message">
+      <p>Please enter a correct address or ZIP code.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Handle AJAX weather search -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get DOM elements
+  const form = document.getElementById('weather-form');
+  const addressInput = document.getElementById('address-input');
+  const submitBtn = document.getElementById('submit-btn');
+  const resultsDiv = document.getElementById('weather-results');
+  const loadingDiv = document.getElementById('loading');
+  const errorDiv = document.getElementById('error-message');
+
+  // Handle form submission
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Don't reload the page
+    
+    const address = addressInput.value.trim();
+    
+    // Check if user entered something
+    if (!address) {
+      showError('Please enter a correct address or ZIP code.');
+      return;
+    }
+
+    // Show loading spinner
+    showLoading();
+    hideError();
+    hideResults();
+
+    // Make AJAX request to get weather data
+    fetch(`/?address=${encodeURIComponent(address)}`, {
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'text/javascript'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text();
+    })
+    .then(data => {
+      hideLoading();
+      // Check response to update the page
+      eval(data);
+    })
+    .catch(error => {
+      hideLoading();
+      showError('Please enter a correct address or ZIP code.');
+      console.error('Error:', error);
+    });
+  });
+
+  // UI helper functions
+  
+  function showLoading() {
+    loadingDiv.style.display = 'block';
+  }
+
+  function hideLoading() {
+    loadingDiv.style.display = 'none';
+  }
+
+  function showResults() {
+    resultsDiv.style.display = 'block';
+  }
+
+  function hideResults() {
+    resultsDiv.style.display = 'none';
+  }
+
+  function showError(message) {
+    errorDiv.innerHTML = `<p>${message}</p>`;
+    errorDiv.style.display = 'block';
+  }
+
+  function hideError() {
+    errorDiv.style.display = 'none';
+  }
+});
+</script>
